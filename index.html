@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CSS3 Animation & JS Storage</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    button {
+      padding: 12px 24px;
+      font-size: 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    img {
+      width: 150px;
+      margin-top: 30px;
+    }
+
+    .bounce {
+      animation: bounce 0.8s ease;
+    }
+
+    @keyframes bounce {
+      0%   { transform: translateY(0); }
+      30%  { transform: translateY(-20px); }
+      50%  { transform: translateY(0); }
+      70%  { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
+    }
+
+    body.dark {
+      background-color: #222;
+      color: #eee;
+    }
+
+    body.dark button {
+      background-color: #666;
+    }
+  </style>
+</head>
+<body>
+  <h1>Welcome!</h1>
+  <button id="preferenceBtn">Toggle Theme</button>
+  <br />
+  <img id="logo" src="https://picsum.photos/seed/pic150/150" alt="logo" />
+
+  <script>
+    const btn = document.getElementById('preferenceBtn');
+    const logo = document.getElementById('logo');
+    const body = document.body;
+
+    // Load saved theme preference
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      body.classList.add('dark');
+    }
+
+    // Toggle and store theme
+    btn.addEventListener('click', () => {
+      body.classList.toggle('dark');
+      const currentTheme = body.classList.contains('dark') ? 'dark' : 'light';
+      localStorage.setItem('theme', currentTheme);
+
+      logo.classList.add('bounce');
+    });
+
+    // Reset animation after it ends
+    logo.addEventListener('animationend', () => {
+      logo.classList.remove('bounce');
+    });
+  </script>
+</body>
+</html>
